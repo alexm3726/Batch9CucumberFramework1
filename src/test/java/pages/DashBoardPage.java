@@ -23,6 +23,9 @@ public class DashBoardPage extends CommonMethods {
 
     @FindBy(xpath="//div[@class='menu']/ul/li")
     public List<WebElement> dashboardtabs;
+
+    @FindBy (id = "menu_admin_viewAdminModule")
+    public WebElement adminButton;
     
 
     public DashBoardPage(){

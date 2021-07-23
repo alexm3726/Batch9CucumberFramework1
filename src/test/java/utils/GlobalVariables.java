@@ -8,4 +8,6 @@ public class GlobalVariables {
     public static String firstName;
     public static String middleName;
     public static String lastName;
+    public static String dbJobTitle;
+    public static String jobTitle;
 }

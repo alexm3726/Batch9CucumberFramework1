@@ -43,7 +43,7 @@ Feature: Adding employees
 
     @db
     Scenario: Add the employee and testing it from the backend
-      When user enters first name "Yulia123" middle name "MS" and last name "Yulia456"
+      When user enters first name "Lord Bacon" middle name "MF" and last name "Richard"
       And capture the employeeId
       And user clicks on save button option
       Then query the HRMS database

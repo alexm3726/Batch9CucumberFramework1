@@ -12,5 +12,4 @@ public class DbUtilTester {
                 " from hs_hr_employees where emp_number='17551';");
         System.out.println(tableDataAsList);
     }
-    //Break till 1:30
 }
