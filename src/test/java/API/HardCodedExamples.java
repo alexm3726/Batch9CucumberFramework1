@@ -1,14 +1,20 @@
 package API;
 
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
+import org.junit.Assert;
 import org.junit.Test;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class HardCodedExamples {
 
     /*
@@ -41,7 +47,7 @@ public class HardCodedExamples {
     }
 
     @Test
-    public void postCreateEmployee() {
+    public void aPostCreateEmployee() {
 
         RequestSpecification preparedRequest = given().header("Authorization", token).header("Content-Type", "application/json").body("{\n" +
                 "  \"emp_firstname\": \"Whooptie\",\n" +
@@ -94,13 +100,71 @@ public class HardCodedExamples {
     }
 
     @Test
-    public void getCreatedEmployee(){
+    public void bGetCreatedEmployee() {
 
-      RequestSpecification preparedRequest= given().header("Authorization", token).header("Content-Type", "application/json").queryParam("employee_id", employee_id);
+        RequestSpecification preparedRequest = given().header("Authorization", token).header("Content-Type", "application/json").queryParam("employee_id", employee_id);
 
-      Response response = preparedRequest.when().get("/getOneEmployee.php");
+        Response response = preparedRequest.when().get("/getOneEmployee.php");
 
-      response.prettyPrint();
+        response.prettyPrint();
+
+        String empID = response.jsonPath().getString("employee.employee_id");
+
+        boolean comparingEmpIDs = empID.contentEquals(employee_id);
+
+        Assert.assertTrue(comparingEmpIDs);
+
+        //Assert.assertTrue(empID.contentEquals(employee_id));
+
+      /*
+      TASK
+       *retrieve the first name and assert that the first name is the same as the one you used
+       *Do not use HAMCREST MATCHERS
+       */
+
+        //Assert.assertEquals(response.jsonPath().getString("employee.emp_firstname"),"Whooptie");
+        Assert.assertTrue(response.jsonPath().getString("employee.emp_firstname").contentEquals("Whooptie"));
+        //same code below just stored in a string
+        /*
+         *String firstName= response.jsonPath().getString("employee.emp_firstname");
+         *Assert.assertTrue(firstName.contentEquals("Whooptie"));
+         */
+
+    }
+
+    @Test
+    public void cGetAllEmployees() {
+        RequestSpecification preparedRequest = given().header("Authorization", token).header("Content-Type", "application/json");
+        Response response = preparedRequest.when().get("/getAllEmployees.php");
+        //int count = response.jsonPath().getInt("Employees.size()");
+        //same code below just created the json object instead of using the method like above
+        String allEmployees = response.prettyPrint();
+                /*
+        Creating and object of JsonPath class
+         */
+        JsonPath js = new JsonPath(allEmployees);
+        /*
+        Retrieving number of employees in response body
+         */
+        int count = js.getInt("Employees.size()");
+        //Print out all employee IDs from the response
+        System.out.println(count);
+
+        for (int i = 0; i < count; i++) {
+            String allEmployeeIDs = js.getString("Employees["+i+"].employee_id");
+            //String allEmployeeIDs=response.jsonPath().getString("Employees["+i+"].employee_id"); --> worked individually but not with the line in if statement
+            //System.out.println(allEmployeeIDs);
+            /*
+            Verify stored employee ID from previous call is in response body and getting the first name for that employee
+             */
+            if(allEmployeeIDs.contentEquals(employee_id)){
+                System.out.println("Employee ID "+ employee_id+" is present in response body");
+                String firstName= js.getString("Employees["+i+"].emp_firstname");
+                //String firstName=response.jsonPath().getString("employees["+i+"].emp_firstname"); --> worked individually but not with the other line that worked individually
+                System.out.println("Employee name is "+ firstName);
+                break;
+            }
+        }
     }
 
 }

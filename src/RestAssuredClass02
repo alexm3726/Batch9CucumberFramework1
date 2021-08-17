@@ -21,4 +21,11 @@ Recap
         - A file/class/module where you can set specific specifications for your test cases execution
 
 
-    -Analyze
+    -ANALYZE
+
+    We imported all these classes manually
+
+    import static io.restassured.RestAssured.*;
+    import static org.hamcrest.Matchers.*;
+    import org.junit.FixMethodOrder;
+    import org.junit.runners.MethodSorters;
