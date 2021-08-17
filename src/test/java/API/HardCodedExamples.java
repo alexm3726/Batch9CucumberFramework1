@@ -22,6 +22,7 @@ public class HardCodedExamples {
      */
     String baseURI = RestAssured.baseURI = "http://hrm.syntaxtechs.net/syntaxapi/api";
     String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjkxNjIzNDAsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTYyOTIwNTU0MCwidXNlcklkIjoiMzAxMCJ9.1dlgu_GTKWyPyQTLWJmQVLT_sbYW4jqKmbBleVU6bS0";
+    static String employee_id;
 
     //@Test
     public void sampleTest() {
@@ -65,7 +66,7 @@ public class HardCodedExamples {
         /*
          * jsonPath() allows us to retrieve specific data from a jason object - just like an xpath with selenium
          */
-        String employee_id = response.jsonPath().getString("Employee.employee_id");
+        employee_id = response.jsonPath().getString("Employee.employee_id");
         System.out.println(employee_id);
         /*
          * Performing Assertions
@@ -90,6 +91,16 @@ public class HardCodedExamples {
         response.then().assertThat().header("Server", equalTo("Apache/2.4.39 (Win64) PHP/7.2.18"));
 
 
+    }
+
+    @Test
+    public void getCreatedEmployee(){
+
+      RequestSpecification preparedRequest= given().header("Authorization", token).header("Content-Type", "application/json").queryParam("employee_id", employee_id);
+
+      Response response = preparedRequest.when().get("/getOneEmployee.php");
+
+      response.prettyPrint();
     }
 
 }
