@@ -27,7 +27,7 @@ public class HardCodedExamples {
      * Then - verification/assertions
      */
     String baseURI = RestAssured.baseURI = "http://hrm.syntaxtechs.net/syntaxapi/api";
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjkxNjIzNDAsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTYyOTIwNTU0MCwidXNlcklkIjoiMzAxMCJ9.1dlgu_GTKWyPyQTLWJmQVLT_sbYW4jqKmbBleVU6bS0";
+    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MzAwMTk1MDEsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTYzMDA2MjcwMSwidXNlcklkIjoiMzAxMCJ9.YW-eL7ggBznJLA_CI5kRCNq_XOWorohbLxjmWlVkU5A";
     static String employee_id;
 
     //@Test
@@ -132,7 +132,7 @@ public class HardCodedExamples {
 
     }
 
-    @Test
+    //@Test
     public void cGetAllEmployees() {
         RequestSpecification preparedRequest = given().header("Authorization", token).header("Content-Type", "application/json");
         Response response = preparedRequest.when().get("/getAllEmployees.php");
@@ -147,7 +147,7 @@ public class HardCodedExamples {
         Retrieving number of employees in response body
          */
         int count = js.getInt("Employees.size()");
-        //Print out all employee IDs from the response
+        //Print the count of all employee IDs from the response
         System.out.println(count);
 
         for (int i = 0; i < count; i++) {
@@ -165,6 +165,30 @@ public class HardCodedExamples {
                 break;
             }
         }
+    }
+    @Test
+    public void dPutUpdateCreatedEmployee(){
+        /*
+        * Update the created employee
+        */
+
+        RequestSpecification preparedRequest = given().header("Authorization", token).header("Content-Type", "application/json").body("{\n" +
+                "  \"employee_id\": \""+employee_id+"\",\n" +
+                "  \"emp_firstname\": \"Ruth\",\n" +
+                "  \"emp_lastname\": \"Chris\",\n" +
+                "  \"emp_middle_name\": \"Addicted\",\n" +
+                "  \"emp_gender\": \"F\",\n" +
+                "  \"emp_birthday\": \"2021-07-10\",\n" +
+                "  \"emp_status\": \"Employee\",\n" +
+                "  \"emp_job_title\": \"Cloud Consultant\"\n" +
+                "}").log().all();
+        Response response = preparedRequest.when().put("/UpdateEmployee.php");
+        String updatedEmployee= response.prettyPrint();
+        response.then().assertThat().body("Employee.emp_firstname", equalTo("Ruth"));
+        //Assert.assertTrue(response.jsonPath().getString("Employee.emp_firstname").contentEquals("Ruth"));
+        response.then().assertThat().statusCode(200);
+
+
     }
 
 }
