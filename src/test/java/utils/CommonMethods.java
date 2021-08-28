@@ -40,7 +40,7 @@ public class CommonMethods {
                 driver = new FirefoxDriver();
                 break;
             default:
-                throw new RuntimeException("Inavlid name of browser");
+                throw new RuntimeException("Invalid name of browser");
         }
 
         driver.get(ConfigReader.getPropertyValue("url"));

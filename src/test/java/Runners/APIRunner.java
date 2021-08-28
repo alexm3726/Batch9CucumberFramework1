@@ -7,10 +7,10 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/features/APIWorkflow.feature",
+        features = "src/test/resources/features/APIWorkFlow.feature",
         //glue is where we can find implementations for gherkin steps
         // we provide the path of package for steps
-        glue = "steps",
+        glue = "APISteps",
         //if we set dry run to true, it will quickly scan all gherkin steps are implemented or not
         // if it is true, then no actual execution happens
         dryRun = false,
