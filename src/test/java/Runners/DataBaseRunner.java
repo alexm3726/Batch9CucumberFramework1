@@ -25,6 +25,5 @@ import org.junit.runner.RunWith;
         tags = "@DB",
         plugin = {"pretty", "html:target/cucumber.html", "json:target/cucumber.json", "rerun:target/failed.txt"}
 )
-
-public class SmokeRunner {
+public class DataBaseRunner {
 }

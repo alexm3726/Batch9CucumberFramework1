@@ -35,25 +35,24 @@ public class DbUtils {
         return resultSet;
     }
 
-    public static List<Map<String, String>> getTableDataAsList(String query) {
+    public static List<Map<String,String>> getTableDataAsList(String query) {
         ResultSet resultSet = getResultSet(query);
-        ResultSetMetaData resultSetMetaData=null;
-        List<Map<String,String>> tableList= new ArrayList<>();
-        Map<String,String> rowMap=null;
+        ResultSetMetaData resultSetMetaData= null;
+        List<Map<String, String>> tableData = new ArrayList<>();
+        Map<String, String> row;
         try {
-             resultSetMetaData=resultSet.getMetaData();
-             while (resultSet.next()){
-                 rowMap=new HashMap<>();
-                 for (int i = 1; i <=resultSetMetaData.getColumnCount() ; i++) {
-                     rowMap.put(resultSetMetaData. getColumnName(i),resultSet.getString(i));
-                 }
-                 tableList.add(rowMap);
-             }
-
+            resultSetMetaData= resultSet.getMetaData();
+            while (resultSet.next()){
+                row=new HashMap<>();
+                for (int i = 1; i <= resultSetMetaData.getColumnCount() ; i++) {
+                    row.put(resultSetMetaData.getColumnName(i), resultSet.getString(i));
+                }
+                tableData.add(row);
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return tableList;
+        return tableData;
     }
 
 }

@@ -4,6 +4,9 @@
 
     Background:
       Given a JWT is generated
+    @Random
+    Scenario:  Creating Dynamic Employee
+      Given a request is prepared to create an employee with dynamic data "Whooptie", "Movie", "blueCheese", "M", "2021-07-10" , "Employee", "Cloud Consultant"
 
     @APIWorkflow
     Scenario: Creating an employee

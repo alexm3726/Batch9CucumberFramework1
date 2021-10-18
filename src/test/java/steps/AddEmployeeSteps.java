@@ -109,27 +109,8 @@ public class AddEmployeeSteps extends CommonMethods {
         }
     }
 
-    @When("capture the employeeId")
-    public void capture_the_employee_id() {
-       AddEmployeePage addEmployeePage=new AddEmployeePage();
-       GlobalVariables.empId=addEmployeePage.employeeId.getAttribute("value");
-    }
 
-    @Then("verify the data from frontend and backend")
-    public void verify_the_data_from_frontend_and_backend() {
-        System.out.println("Backend ");
-        System.out.println("DBFirstName "+GlobalVariables.dbFirstName);
-        System.out.println("DBMiddleName "+GlobalVariables.dbMiddleName);
-        System.out.println("DBLastName "+GlobalVariables.dbLastName);
-        System.out.println("FrontEnd ");
-        System.out.println("Firstname "+GlobalVariables.firstName);
-        System.out.println("MiddleName "+GlobalVariables.middleName);
-        System.out.println("Lastname "+GlobalVariables.lastName);
-        Assert.assertEquals(GlobalVariables.firstName,GlobalVariables.dbFirstName);
-        Assert.assertEquals(GlobalVariables.middleName,GlobalVariables.dbMiddleName);
-        Assert.assertEquals(GlobalVariables.lastName,GlobalVariables.dbLastName);
 
-    }
 
 
 }
